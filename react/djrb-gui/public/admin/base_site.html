@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('DJR site admin') }}{% endblock %}
+
+{% block extrahead %}
+    <link rel="icon" href="{% static 'media/favicon/favicon.ico' %}">
+    
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">DJR Administration</a></h1>
+{% endblock %}

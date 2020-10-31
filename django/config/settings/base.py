@@ -18,7 +18,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # /backend
-APPS_DIR = BASE_DIR / "djrb"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -35,9 +34,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOCAL_APPS = [
+    'authentication.apps.AuthenticationConfig',
+    'blog.apps.BlogConfig',
 ]
 
 THIRD_PARTY_APPS = [
+    'rest_framework',
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
+
 ]
 
 INSTALLED_APPS = [
@@ -54,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -63,10 +69,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+APPS_DIR = BASE_DIR / "djrb"
+
+PUBLIC_DIR = APPS_DIR.parent.parent
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [APPS_DIR / "templates"],
+        # 'DIRS': [APPS_DIR / "templates"],
+        'DIRS': [PUBLIC_DIR / "react/djrb-gui/public"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +95,7 @@ TEMPLATES = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
@@ -99,11 +110,41 @@ STATIC_ROOT = str(BASE_DIR / "staticfiles")
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(APPS_DIR / "static")]
+STATICFILES_DIRS = [str(PUBLIC_DIR / "react/djrb-gui/public/static")]
 
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR / "media")
+MEDIA_ROOT = str(PUBLIC_DIR / "react/djrb-gui/public/static/media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
+
+
+# # STATIC
+# # ------------------------------------------------------------------------------
+# # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+# STATIC_ROOT = str(BASE_DIR / "staticfiles")
+# # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
+# STATIC_URL = "/static/"
+# # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+# STATICFILES_DIRS = [str(APPS_DIR / "static")]
+
+# # MEDIA
+# # ------------------------------------------------------------------------------
+# # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+# MEDIA_ROOT = str(APPS_DIR / "media")
+# # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+# MEDIA_URL = "/media/"

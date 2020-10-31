@@ -8,6 +8,10 @@ verify_ssl = true
 [packages]
 django = "*"
 python-decouple = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+django-cors-headers = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

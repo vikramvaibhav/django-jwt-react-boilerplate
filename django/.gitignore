@@ -1,5 +1,5 @@
 # Static Files & Media Files
-staticfiles
+staticfiles/
 static
 
 # Byte-compiled / optimized / DLL files
