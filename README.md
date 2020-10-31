@@ -46,13 +46,13 @@ After that, you should:
    ```
    git clone https://github.com/vikramvaibhav/django-jwt-react-boilerplate.git
    ```
-2. Install the requirements of the project template by running in django directory:
-   ```
-   pipenv install
-   ```
-3. Activate the virtualenv created by pipenv:
+2. Activate the virtualenv created by pipenv:
    ```
    pipenv shell
+   ```
+3. Install the requirements of the project template by running in django directory:
+   ```
+   pipenv install
    ```
 4. Apply the migrations:
    ```
